@@ -1,2 +1,2 @@
 # Event-Recommendation-Engine
-This is an personalized event recommendation engine to recommend nearby event for users.
+This is an personalized event recommendation engine to recommend nearby events for users.
