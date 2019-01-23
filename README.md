@@ -1,2 +1,2 @@
-# Round: Personalized Event-Recommendation-Engine
-A Java web service which can recommend the latest nearby events for users.
+# Round: A Personalized Event-Recommendation-Engine
+Java web service which can recommend the latest nearby events for users.
