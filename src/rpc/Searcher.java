@@ -2,6 +2,7 @@ package rpc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import entity.Record;
+import external.TicketMasterAPI;
 
 
 /**
@@ -34,22 +39,16 @@ public class Searcher extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.setContentType("application/json");
+		double latitude = Double.parseDouble(request.getParameter("lat"));
+		double longitude = Double.parseDouble(request.getParameter("lon"));
 		
-		PrintWriter out = response.getWriter();
-		if (request.getParameter("username") != null) {
-			String username = request.getParameter("username");
-			JSONObject obj = new JSONObject();
-			try {
-				obj.put("username", username);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			out.print(obj);
+		TicketMasterAPI api = new TicketMasterAPI();
+		List<Record> records = api.fetchData(latitude, longitude, null);
+		JSONArray array = new JSONArray();
+		for (Record record : records) {
+			array.put(record.toJSONObject());
 		}
-		out.close();
+		JsonHelper.writeJsonArray(response, array);
 		
 	}
 
