@@ -1,2 +1,2 @@
-# Event-Recommendation-Engine
-This is an personalized event recommendation engine to recommend nearby events for users.
+# Around: The Personalized Event-Recommendation-Engine
+Java web service which can recommend the latest nearby events for users.
