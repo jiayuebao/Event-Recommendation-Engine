@@ -16,7 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import external.TicketMasterAPI;
-import entity.Record;
+import entity.Event;
 
 /**
  * Servlet implementation class Recommender

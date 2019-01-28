@@ -1,6 +1,5 @@
 package external;
 
-import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -15,8 +14,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import entity.Record;
-import entity.Record.RecordBuilder;
+import entity.Event;
+import entity.Event.EventBuilder;
+
 
 /**
  * Obtain "events" JSON data from Ticketmaster API
@@ -28,6 +28,7 @@ public class TicketMasterAPI {
 	private static final String DEFAULT_KEYWORD = ""; // no restriction
 	private static final String API_KEY = "RuOMgaUhECOsVsKuTvEG3uSOgfhbIqcQ";
 	private static final String RADIUS = "50";
+	private static final String QUERY = "apikey=%s&lat=%s&lon%s&keyword=%s&radius=%s&size=10";
 	
 	/**
 	 * Given latitude, longitude and keyword, 
@@ -39,7 +40,7 @@ public class TicketMasterAPI {
 	 * @param keyword
 	 * @return JSON array of events data
 	 */
-	public List<Record> fetchData(double latitude, double longitude, String keyword) {
+	public List<Event> fetchData(double latitude, double longitude, String keyword) {
 		if (keyword == null) {
 			keyword = DEFAULT_KEYWORD;
 		}
@@ -50,8 +51,7 @@ public class TicketMasterAPI {
 			e.printStackTrace();
 		}
 		
-		String query = String.format("apikey=%s&lat=%s&lon%s&keyword=%s&radius=%s&size=10", 
-				API_KEY, latitude, longitude, keyword, RADIUS);
+		String query = String.format(QUERY, API_KEY, latitude, longitude, keyword, RADIUS);
 		
 		String url = URL + "?" + query;
 		
@@ -83,14 +83,14 @@ public class TicketMasterAPI {
 			if (!json.isNull("_embedded")) {
 				JSONObject embedded = json.getJSONObject("_embedded");
 				JSONArray events = embedded.getJSONArray("events");
-				return getRecordList(events);
+				return getEventList(events);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		// obtain nothing
-		return new ArrayList<Record>();
+		return new ArrayList<Event>();
 	}
 	
 	/**
@@ -99,14 +99,14 @@ public class TicketMasterAPI {
 	 * @return record list
 	 * @throws JSONException
 	 */
-	private List<Record> getRecordList(JSONArray events) throws JSONException {
-		List<Record> records = new ArrayList<>();
-		for (int i = 0; i < events.length(); i++) {
-			JSONObject event = events.getJSONObject(i);
-			Record record = filterData(event);
-			records.add(record);
+	private List<Event> getEventList(JSONArray array) throws JSONException {
+		List<Event> list = new ArrayList<>();
+		for (int i = 0; i < array.length(); i++) {
+			JSONObject obj = array.getJSONObject(i);
+			Event event = filterData(obj);
+			list.add(event);
 		}
-		return records;
+		return list;
 	}
 	
 	/**
@@ -115,8 +115,8 @@ public class TicketMasterAPI {
 	 * @return filtered data: record
 	 * @throws JSONException
 	 */
-	private Record filterData(JSONObject event) throws JSONException {
-		RecordBuilder builder = new RecordBuilder();
+	private Event filterData(JSONObject event) throws JSONException {
+		EventBuilder builder = new EventBuilder();
 		if (!event.isNull("id")) {
 			builder.setId(event.getString("id"));
 		} else {
@@ -137,7 +137,7 @@ public class TicketMasterAPI {
 		} 
 		
 		builder.setAddress(getAddress(event));
-		builder.setClassifications(getClassifications(event));
+		builder.setCategories(getCategories(event));
 		builder.setImageUrl(getImageUrl(event));
 		
 		return builder.build();
@@ -191,17 +191,17 @@ public class TicketMasterAPI {
 	/**
 	 * 
 	 * @param event
-	 * @return classifications set
+	 * @return categories set
 	 * @throws JSONException
 	 */
-	private Set<String> getClassifications(JSONObject event) throws JSONException {
+	private Set<String> getCategories(JSONObject event) throws JSONException {
 		Set<String> set = new HashSet<>();
-		if (!event.isNull("classifications")) {
-			JSONArray classifications = event.getJSONArray("classifications");
-			for (int i = 0; i < classifications.length(); i++) {
-				JSONObject classification = classifications.getJSONObject(i);
-				if (!classification.isNull("segment")) {
-					JSONObject segment = classification.getJSONObject("segment");
+		if (!event.isNull("categories")) {
+			JSONArray categories = event.getJSONArray("categories");
+			for (int i = 0; i < categories.length(); i++) {
+				JSONObject category = categories.getJSONObject(i);
+				if (!category.isNull("segment")) {
+					JSONObject segment = category.getJSONObject("segment");
 					if (!segment.isNull("name")) {
 						set.add(segment.getString("name"));
 					}
@@ -237,9 +237,9 @@ public class TicketMasterAPI {
 		double latitude = 40.4406;
 		double longitude = 79.9959;
 		String keyword = "music";
-		List<Record> events = new TicketMasterAPI().fetchData(latitude, longitude, keyword);
+		List<Event> events = new TicketMasterAPI().fetchData(latitude, longitude, keyword);
 		
-		for (Record event : events) {
+		for (Event event : events) {
 			System.out.println(event.toJSONObject());
 		}
 

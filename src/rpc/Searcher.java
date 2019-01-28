@@ -1,7 +1,10 @@
 package rpc;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,8 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import entity.Record;
+import entity.Event;
 import external.TicketMasterAPI;
+import db.DBConnection;
+import db.DBConnectionFactory;
 
 
 /**
@@ -42,13 +47,19 @@ public class Searcher extends HttpServlet {
 		double latitude = Double.parseDouble(request.getParameter("lat"));
 		double longitude = Double.parseDouble(request.getParameter("lon"));
 		
-		TicketMasterAPI api = new TicketMasterAPI();
-		List<Record> records = api.fetchData(latitude, longitude, null);
+		//TicketMasterAPI api = new TicketMasterAPI();
+		//List<Event> events = api.fetchData(latitude, longitude, null);
+		
+		// fetch TicketMaster data via database api
+		DBConnection db = DBConnectionFactory.getConnection();
+		List<Event> events = db.searchEvent(latitude, longitude, null);
+		
 		JSONArray array = new JSONArray();
-		for (Record record : records) {
-			array.put(record.toJSONObject());
+		for (Event event : events) {
+			array.put(event.toJSONObject());
 		}
-		JsonHelper.writeJsonArray(response, array);
+		RpcHelper.writeJsonArray(response, array);
+		db.cleanUp();
 		
 	}
 

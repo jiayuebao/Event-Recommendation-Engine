@@ -5,20 +5,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Record {
+public class Event {
 	private final String id;
 	private final String name;
 	private final String address;
-	private final Set<String> classifications;
+	private final Set<String> categories;
 	private final String imageUrl;
 	private final String url;
 	private final double distance;
 	
-	private Record(RecordBuilder builder) {
+	private Event(EventBuilder builder) {
 		this.id = builder.id;
 		this.name = builder.name;
 		this.address = builder.address;
-		this.classifications = builder.classifications;
+		this.categories = builder.categories;
 		this.imageUrl = builder.imageUrl;
 		this.url = builder.url;
 		this.distance = builder.distance;
@@ -30,7 +30,7 @@ public class Record {
 			obj.put("id", id);
 			obj.put("name", name);
 			obj.put("address", address);
-			obj.put("classifications", new JSONArray(classifications));
+			obj.put("classifications", new JSONArray(categories));
 			obj.put("image_url", imageUrl);
 			obj.put("url", url);
 			obj.put("distance", distance);
@@ -54,8 +54,8 @@ public class Record {
 	}
 
 
-	public Set<String> getClassifications() {
-		return classifications;
+	public Set<String> getCategories() {
+		return categories;
 	}
 
 
@@ -75,18 +75,18 @@ public class Record {
 
 
 	/** inner class */
-	public static class RecordBuilder {
+	public static class EventBuilder {
 		private String id;
 		private String name;
 		private String address;
-		private Set<String> classifications;
+		private Set<String> categories;
 		private String imageUrl;
 		private String url;
 		private double distance;
 		
 		/* external interface */
-		public Record build() {
-			return new Record(this);
+		public Event build() {
+			return new Event(this);
 		}
 		
 		public void setId(String id) {
@@ -98,8 +98,8 @@ public class Record {
 		public void setAddress(String address) {
 			this.address = address;
 		}
-		public void setClassifications(Set<String> classifications) {
-			this.classifications = classifications;
+		public void setCategories(Set<String> categories) {
+			this.categories = categories;
 		}
 		public void setImageUrl(String imageUrl) {
 			this.imageUrl = imageUrl;
