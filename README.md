@@ -1,6 +1,6 @@
 # FUNscover: The Personalized Event-Recommendation-Engine
 Java web service which can recommend the latest nearby events for users.
-**Backend**
+### Backend
 - Server: Tomcat
 - Data Source: Ticketmaster API
 - Framework: Java Servelet
@@ -9,7 +9,7 @@ Java web service which can recommend the latest nearby events for users.
   - users
   - history
   - categories
-**Frontend**
+### Frontend
 - HTML
 - CSS
 - JavaScript
