@@ -82,6 +82,7 @@ public class MySQLConnection implements DBConnection {
 	@Override
 	public Set<String> getFavoriteIds(String userId) {
 		if (conn == null) {
+			System.err.println("MySQL Database connection failed");
 			return new HashSet<String>();
 		}
 		
@@ -105,6 +106,7 @@ public class MySQLConnection implements DBConnection {
 	@Override
 	public Set<Event> getFavorites(String userId) {
 		if (conn == null) {
+			System.err.println("MySQL Database connection failed");
 			return new HashSet<Event>();
 		}
 		
@@ -142,6 +144,7 @@ public class MySQLConnection implements DBConnection {
 	@Override
 	public Set<String> getCategories(String eventId) {
 		if (conn == null) {
+			System.err.println("MySQL Database connection failed");
 			return new HashSet<String>();
 		}
 		Set<String> categories = new HashSet<>();
@@ -207,13 +210,46 @@ public class MySQLConnection implements DBConnection {
 
 	@Override
 	public String getUserName(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		if (conn == null) {
+			System.err.println("MySQL Database connection failed");
+			return null;
+		}
+		
+		String name = "";
+		try {
+			String sql = "SELECT first_name,last_name FROM users WHERE user_id = ? ";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				name = rs.getString("first_name") + " " + rs.getString("last_name");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 
 	@Override
 	public boolean verifyLogin(String userId, String password) {
-		// TODO Auto-generated method stub
+		if (conn == null) {
+			System.err.println("MySQL Database connection failed");
+			return false;
+		}
+		
+		try {
+			String sql = "SELECT user_id FROM users WHERE user_id = ? AND password = ?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, password);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
