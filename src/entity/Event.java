@@ -30,7 +30,7 @@ public class Event {
 			obj.put("id", id);
 			obj.put("name", name);
 			obj.put("address", address);
-			obj.put("classifications", new JSONArray(categories));
+			obj.put("categories", new JSONArray(categories));
 			obj.put("image_url", imageUrl);
 			obj.put("url", url);
 			obj.put("distance", distance);

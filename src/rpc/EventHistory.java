@@ -41,9 +41,9 @@ public class EventHistory extends HttpServlet {
 		String userId = request.getParameter("user_id");
 		JSONArray array = new JSONArray();
 		
-		DBConnection conn = DBConnectionFactory.getConnection();
+		DBConnection db = DBConnectionFactory.getConnection();
 		try {
-			Set<Event> events = conn.getFavorites(userId);
+			Set<Event> events = db.getFavorites(userId);
 			for (Event  event : events) {
 				JSONObject obj = event.toJSONObject();
 				obj.append("favorite", true);
@@ -54,7 +54,7 @@ public class EventHistory extends HttpServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} finally {
-			conn.cleanUp();
+			db.cleanUp();
 		}
 
 	}

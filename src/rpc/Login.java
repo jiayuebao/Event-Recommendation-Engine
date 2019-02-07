@@ -79,6 +79,7 @@ public class Login extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("user_id", userId);
 				session.setMaxInactiveInterval(600);
+				
 				result.put("login status", "SUCCESS")
 				.put("user_id", userId)
 				.put("name", db.getUserName(userId));

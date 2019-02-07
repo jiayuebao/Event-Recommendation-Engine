@@ -6,12 +6,14 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,22 +45,39 @@ public class Searcher extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		HttpSession session  = request.getSession(false);
+		if (session == null) {
+			response.setStatus(403);
+			return;
+		}
+		String userId = session.getAttribute("user_id").toString();
+		
+		
+		
 		double latitude = Double.parseDouble(request.getParameter("lat"));
 		double longitude = Double.parseDouble(request.getParameter("lon"));
+		String term = request.getParameter("term");
 		
-		//TicketMasterAPI api = new TicketMasterAPI();
-		//List<Event> events = api.fetchData(latitude, longitude, null);
-		
-		// fetch TicketMaster data via database api
 		DBConnection db = DBConnectionFactory.getConnection();
-		List<Event> events = db.searchEvent(latitude, longitude, null);
 		
+		// search from ticketmaster API
+		List<Event> events = db.searchEvent(latitude, longitude, term);
+		Set<String> favoriteEvents = db.getFavoriteIds(userId);
 		JSONArray array = new JSONArray();
 		for (Event event : events) {
-			array.put(event.toJSONObject());
+			JSONObject obj = event.toJSONObject();
+			try {
+				obj.put("favorite", favoriteEvents.contains(event.getId()));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			array.put(obj);
 		}
 		RpcHelper.writeJsonArray(response, array);
+	
 		db.cleanUp();
 		
 	}
