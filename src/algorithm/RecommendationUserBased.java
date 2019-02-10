@@ -1,4 +1,4 @@
-package Recommendation;
+package algorithm;
 
 public class RecommendationUserBased {
 

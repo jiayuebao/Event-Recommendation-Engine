@@ -23,13 +23,13 @@ import db.DBConnection;
  * Servlet implementation class EventHistory
  */
 @WebServlet("/history")
-public class EventHistory extends HttpServlet {
+public class HistoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EventHistory() {
+    public HistoryServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -1,8 +1,10 @@
 package rpc;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.List;
 import java.util.Set;
 
@@ -17,25 +19,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import Recommendation.RecommendationContentBased;
+import entity.Event;
+import external.TicketMasterAPI;
 import db.DBConnection;
 import db.DBConnectionFactory;
-import external.TicketMasterAPI;
-import entity.Event;
+
 
 /**
- * Servlet implementation class Recommender
- * endpoint: recommendation
+ * Servlet implementation class Searcher
+ * endpoint: search
  * @author: Jiayue Bao
  */
-@WebServlet("/recommendation")
-public class Recommender extends HttpServlet {
+@WebServlet("/search")
+public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Recommender() {
+    public SearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,22 +45,26 @@ public class Recommender extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		/*
 		HttpSession session  = request.getSession(false);
 		if (session == null) {
 			response.setStatus(403);
 			return;
 		}
-		String userId = session.getAttribute("user_id").toString();
+		*/
+		//String userId = session.getAttribute("user_id").toString();
 		
 		double latitude = Double.parseDouble(request.getParameter("lat"));
 		double longitude = Double.parseDouble(request.getParameter("lon"));
-		
-		// search for recommendation
-		RecommendationContentBased recommendation = new RecommendationContentBased();
-		List<Event> events = recommendation.recommend(userId, latitude, longitude);
+		String userId = "1111";
+		String term = request.getParameter("term");
 		
 		DBConnection db = DBConnectionFactory.getConnection();
+		
+		// search from ticketmaster API
+		List<Event> events = db.searchEvent(latitude, longitude, term);
 		Set<String> favoriteEvents = db.getFavoriteIds(userId);
 		JSONArray array = new JSONArray();
 		for (Event event : events) {
@@ -80,7 +86,8 @@ public class Recommender extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

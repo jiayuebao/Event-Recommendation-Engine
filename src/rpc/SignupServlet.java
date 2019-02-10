@@ -18,13 +18,13 @@ import db.DBConnectionFactory;
  * Servlet implementation class Signup
  */
 @WebServlet("/signup")
-public class Signup extends HttpServlet {
+public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Signup() {
+    public SignupServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
