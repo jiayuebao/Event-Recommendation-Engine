@@ -3,7 +3,7 @@ Java web service which can recommend the latest nearby events for users.
 ### Backend
 - Server: Tomcat
 - Data Source: Ticketmaster API
-- Framework: Java Servelet
+- Framework: Java Servlet
 - Database: MySQL, JDBC
   - events
   - users
