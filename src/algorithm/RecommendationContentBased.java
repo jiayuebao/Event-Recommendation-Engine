@@ -16,37 +16,42 @@ import entity.Event;
 
 public class RecommendationContentBased {
 	public List<Event> recommend(String userId, double lat, double lon) {
-		List<Event> results = new ArrayList<>();
-		
-		// step1 : get all favorite eventIds
-		DBConnection db = DBConnectionFactory.getConnection();
-		Set<String> favoriteEventIds = db.getFavoriteIds(userId);
-		
-		// step2 : get all categories, sort by count
-		Map<String, Integer> map = new HashMap<>(); // key: category value: count
-		for (String eventId : favoriteEventIds) {
-			Set<String> categories = db.getCategories(eventId);
+		List<Event> recommendedEvents = new ArrayList<>();
+
+		// Step 1, get all favorited eventids
+		DBConnection connection = DBConnectionFactory.getConnection();
+		Set<String> favoritedEventIds = connection.getFavoriteIds(userId);
+
+		// Step 2, get all categories,  sort by count
+		// {"sports": 5, "music": 3, "art": 2}
+		Map<String, Integer> allCategories = new HashMap<>();
+		for (String eventId : favoritedEventIds) {
+			Set<String> categories = connection.getCategories(eventId);
 			for (String category : categories) {
-				map.put(category, map.getOrDefault(category, 0)+1);
+				allCategories.put(category, allCategories.getOrDefault(category, 0) + 1);
 			}
 		}
-		List<String> keyList = new ArrayList<>(map.keySet()); 
-		Collections.sort(keyList, (k1, k2) -> (map.get(k2)-map.get(k1)));
+		List<Entry<String, Integer>> categoryList = new ArrayList<>(allCategories.entrySet());
+		Collections.sort(categoryList, (Entry<String, Integer> e1, Entry<String, Integer> e2) -> {
+			return Integer.compare(e2.getValue(), e1.getValue());
+		});
 		
-		
-		// step3: search based on category, filter out favorite events
-		Set<String> visited = new HashSet<>();
-		for (String key : keyList) {
-			List<Event> events = db.searchEvent(lat, lon, key);
+		// Step 3, search based on category, filter out favorite events
+		Set<String> visitedEventIds = new HashSet<>();
+		for (Entry<String, Integer> category : categoryList) {
+			List<Event> events = connection.searchEvent(lat, lon, category.getKey());
 			
-			for (Event event: events) {
-				if (!favoriteEventIds.contains(event.getId()) && !visited.add(event.getId())) {
-					results.add(event);
+			for (Event event : events) {
+				if (!favoritedEventIds.contains(event.getId()) && !visitedEventIds.contains(event.getId())) {
+					recommendedEvents.add(event);
+					visitedEventIds.add(event.getId());
 				}
 			}
 		}
-		db.cleanUp();
-		return results;
+		
+		connection.cleanUp();
+		return recommendedEvents;
+
 	}
 
 }

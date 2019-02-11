@@ -59,17 +59,11 @@ public class RecommendServlet extends HttpServlet {
 		List<Event> events = recommendation.recommend(userId, latitude, longitude);
 		
 		DBConnection db = DBConnectionFactory.getConnection();
-		Set<String> favoriteEvents = db.getFavoriteIds(userId);
 		JSONArray array = new JSONArray();
 		for (Event event : events) {
-			JSONObject obj = event.toJSONObject();
-			try {
-				obj.put("favorite", favoriteEvents.contains(event.getId()));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			array.put(obj);
+			array.put(event.toJSONObject());
 		}
+		
 		RpcHelper.writeJsonArray(response, array);
 	
 		db.cleanUp();

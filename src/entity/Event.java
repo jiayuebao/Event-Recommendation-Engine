@@ -27,7 +27,7 @@ public class Event {
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		try {
-			obj.put("id", id);
+			obj.put("item_id", id);
 			obj.put("name", name);
 			obj.put("address", address);
 			obj.put("categories", new JSONArray(categories));

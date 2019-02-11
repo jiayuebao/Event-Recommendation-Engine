@@ -154,7 +154,7 @@ public class MySQLConnection implements DBConnection {
 			stmt.setString(1, eventId);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				categories.add(rs.getString("event_id"));
+				categories.add(rs.getString("category"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

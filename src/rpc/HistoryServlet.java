@@ -72,7 +72,7 @@ public class HistoryServlet extends HttpServlet {
 			System.out.println(obj.toString());
 			List<String> eventIds = new ArrayList<>();
 			for (int i = 0; i < favorites.length(); i++) {
-				//eventIds.add(favorites.getString(i));	
+				eventIds.add(favorites.getString(i));	
 			}
 			// update database
 			db.setFavorites(userId, eventIds);
@@ -99,7 +99,7 @@ public class HistoryServlet extends HttpServlet {
 			JSONArray favorites = obj.getJSONArray("favorite");
 			List<String> eventIds = new ArrayList<>();
 			for (int i = 0; i < favorites.length(); i++) {
-				//eventIds.add(favorites.getString(i));
+				eventIds.add(favorites.getString(i));
 			}
 			// update database
 			db.unsetFavorites(userId, eventIds);
