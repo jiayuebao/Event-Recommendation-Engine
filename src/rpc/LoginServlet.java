@@ -80,13 +80,13 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("user_id", userId);
 				session.setMaxInactiveInterval(600);
 				
-				result.put("login status", "SUCCESS")
+				result.put("status", "OK")
 				.put("user_id", userId)
 				.put("name", db.getUserName(userId));
 				
 			} else {
 				response.setStatus(401); // login failure
-				result.put("login status", "FAILURE");
+				result.put("status", "FAILURE");
 			}
 			
 			// give response

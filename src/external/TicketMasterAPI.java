@@ -2,6 +2,7 @@ package external;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -27,8 +28,7 @@ public class TicketMasterAPI {
 	private static final String URL = "https://app.ticketmaster.com/discovery/v2/events.json";
 	private static final String DEFAULT_KEYWORD = ""; // no restriction
 	private static final String API_KEY = "RuOMgaUhECOsVsKuTvEG3uSOgfhbIqcQ";
-	private static final String RADIUS = "50";
-	private static final String QUERY = "apikey=%s&lat=%s&lon%s&keyword=%s&radius=%s&size=10";
+	private static final String QUERY = "apikey=%s&latlong=%s,%s&keyword=%s&radius=%s";
 	
 	/**
 	 * Given latitude, longitude and keyword, 
@@ -45,15 +45,17 @@ public class TicketMasterAPI {
 			keyword = DEFAULT_KEYWORD;
 		}
 		
+		
 		try {
-			keyword = URLEncoder.encode(keyword, "UTF-8");
-		} catch (Exception e) {
+			keyword = URLEncoder.encode(keyword, "UTF-8"); //"Rick Sun" => "Rick%20Sun"
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		String query = String.format(QUERY, API_KEY, latitude, longitude, keyword, RADIUS);
-		
+
+		String query = String.format(QUERY, API_KEY, latitude, longitude, keyword, 50);
 		String url = URL + "?" + query;
+
 		
 		try {
 			// build HTTP connection
@@ -230,20 +232,20 @@ public class TicketMasterAPI {
 		}
 		return "";
 	}
-	/**
-	 * Test the query
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		double latitude = 40.4406;
-		double longitude = 79.9959;
-		String keyword = "music";
-		List<Event> events = new TicketMasterAPI().fetchData(latitude, longitude, keyword);
-		
-		for (Event event : events) {
-			System.out.println(event.toJSONObject());
-		}
-
-	}
+//	/**
+//	 * Test the query
+//	 * @param args
+//	 */
+//	public static void main(String[] args) {
+//		double latitude = 40.4406;
+//		double longitude = 79.9959;
+//		String keyword = "music";
+//		List<Event> events = new TicketMasterAPI().fetchData(latitude, longitude, keyword);
+//		
+//		for (Event event : events) {
+//			System.out.println(event.toJSONObject());
+//		}
+//
+//	}
 
 }

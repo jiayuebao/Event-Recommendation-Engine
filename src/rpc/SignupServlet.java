@@ -17,7 +17,7 @@ import db.DBConnectionFactory;
 /**
  * Servlet implementation class Signup
  */
-@WebServlet("/signup")
+@WebServlet("/register")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

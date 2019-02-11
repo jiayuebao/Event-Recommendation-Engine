@@ -49,7 +49,6 @@ public class HistoryServlet extends HttpServlet {
 				obj.append("favorite", true);
 				array.put(obj);
 			}
-			
 			RpcHelper.writeJsonArray(response, array);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -64,19 +63,21 @@ public class HistoryServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DBConnection db = DBConnectionFactory.getConnection();
-		JSONObject  obj = RpcHelper.readJsonObject(request);
+		
 		try {
+			JSONObject  obj = RpcHelper.readJsonObject(request);
 			String userId = obj.getString("user_id");
 			// obtain favorite event ids
 			JSONArray favorites = obj.getJSONArray("favorite");
+			System.out.println(obj.toString());
 			List<String> eventIds = new ArrayList<>();
 			for (int i = 0; i < favorites.length(); i++) {
-				eventIds.add(favorites.getString(i));
+				//eventIds.add(favorites.getString(i));	
 			}
 			// update database
 			db.setFavorites(userId, eventIds);
 			// give response
-			RpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
+			RpcHelper.writeJsonObject(response, new JSONObject().put("status", "OK"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -98,12 +99,12 @@ public class HistoryServlet extends HttpServlet {
 			JSONArray favorites = obj.getJSONArray("favorite");
 			List<String> eventIds = new ArrayList<>();
 			for (int i = 0; i < favorites.length(); i++) {
-				eventIds.add(favorites.getString(i));
+				//eventIds.add(favorites.getString(i));
 			}
 			// update database
 			db.unsetFavorites(userId, eventIds);
 			// give response
-			RpcHelper.writeJsonObject(response, new JSONObject().put("result", "SUCCESS"));
+			RpcHelper.writeJsonObject(response, new JSONObject().put("status", "OK"));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

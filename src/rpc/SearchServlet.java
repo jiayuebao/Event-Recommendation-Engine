@@ -47,18 +47,17 @@ public class SearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		/*
+		
 		HttpSession session  = request.getSession(false);
 		if (session == null) {
 			response.setStatus(403);
 			return;
 		}
-		*/
-		//String userId = session.getAttribute("user_id").toString();
+		
+		String userId = session.getAttribute("user_id").toString();
 		
 		double latitude = Double.parseDouble(request.getParameter("lat"));
 		double longitude = Double.parseDouble(request.getParameter("lon"));
-		String userId = "1111";
 		String term = request.getParameter("term");
 		
 		DBConnection db = DBConnectionFactory.getConnection();

@@ -37,19 +37,20 @@ public class RpcHelper {
 	
 	// Read the request and convert to JSONObject and convert 
 	public static JSONObject readJsonObject(HttpServletRequest request) {
-	  	   StringBuilder builder = new StringBuilder();
+		StringBuilder sBuilder = new StringBuilder();
 	  	   try (BufferedReader reader = request.getReader()) {
 	  		 String line = null;
 	  		 while((line = reader.readLine()) != null) {
-	  			 builder.append(line);
+	  			 sBuilder.append(line);
 	  		 }
-	  		 return new JSONObject(builder.toString());
+	  		 return new JSONObject(sBuilder.toString());
 	  		
 	  	   } catch (Exception e) {
 	  		 e.printStackTrace();
 	  	   }
 	  	
 	  	  return new JSONObject();
+
 	   }
 
 }

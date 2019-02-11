@@ -13,15 +13,14 @@
    */
   function init() {
     // register event listeners
-    //document.querySelector('#login-form-btn').addEventListener('click', onSessionInvalid);
-    //document.querySelector('#login-btn').addEventListener('click', login);
-    //document.querySelector('#register-form-btn').addEventListener('click', showRegisterForm);
-    //document.querySelector('#register-btn').addEventListener('click', register);
+    document.querySelector('#login-form-btn').addEventListener('click', onSessionInvalid);
+    document.querySelector('#login-btn').addEventListener('click', login);
+    document.querySelector('#register-form-btn').addEventListener('click', showRegisterForm);
+    document.querySelector('#register-btn').addEventListener('click', register);
     document.querySelector('#nearby-btn').addEventListener('click', loadNearbyItems);
     document.querySelector('#fav-btn').addEventListener('click', loadFavoriteItems);
     document.querySelector('#recommend-btn').addEventListener('click', loadRecommendedItems);
-    initGeoLocation();
-    //validateSession();
+    validateSession();
     // onSessionValid({"user_id":"1111","name":"John Smith","status":"OK"});
   }
 
@@ -60,6 +59,7 @@
     var avatar = document.querySelector('#avatar');
     var welcomeMsg = document.querySelector('#welcome-msg');
     var logoutBtn = document.querySelector('#logout-link');
+    var form = document.querySelector(".form");
 
     welcomeMsg.innerHTML = 'Welcome, ' + user_fullname;
 
@@ -70,6 +70,7 @@
     showElement(logoutBtn, 'inline-block');
     hideElement(loginForm);
     hideElement(registerForm);
+    hideElement(form);
 
     initGeoLocation();
   }
@@ -490,6 +491,7 @@
           favIcon.className = favorite ? 'fa fa-heart' : 'fa fa-heart-o';
         }
       });
+    console.log(item_id);
   }
 
   // -------------------------------------

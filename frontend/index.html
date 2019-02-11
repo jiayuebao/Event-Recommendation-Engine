@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en-US">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Item Recommendation">
@@ -14,31 +13,9 @@
   <link rel="stylesheet" href="css/index/main.css">
 </head>
 
-<body class="">
-  <div id="container"> 
-     <!-- LOGIN *START -->
-    <!-- <div class="login-page"> 
-      <div class="form">
-        <form class="login-form">
-          <input type="text" placeholder="username"/>
-          <input type="password" placeholder="password"/>
-          <button id="login-btn">login</button>
-          <p class="message">Not registered? <a href="#" id="register-form-btn">Create an account</a></p>
-          <p id="login-error"></p>
-        </form>
-        <form class="register-form">
-          <input type="text" placeholder="name"/>
-          <input type="password" placeholder="password"/>
-          <input type="text" placeholder="email address"/>
-          <button id="register-btn">create</button>
-          <p class="message">Already registered? <a href="#" id="login-form-btn">Sign In</a></p>
-          <p id="register-result"></p>
-        </form>
-      </div>
-    </div> -->
-    <!-- LOGIN *END-->
-
-    <!-- HEADER *START -->
+<body>
+  <div class="container1">
+  <!-- HEADER *START -->
     <div class="header wrap">
       <div class="inner clearfix">
         <div class="head clearfix">        
@@ -51,48 +28,79 @@
                     <a href="#">Home</a>
                   </li>
                   <li class="menu-item">
-                    <a href="login.html">Login</a>
+                    <a href="#">Contact</a>
                   </li>
                   <li class="menu-item">
-                    <a id="logout-link" href="logout">Logout</a>
+                    <a id="#" href="logout">About</a>
                   </li>
                 </nav>
               </ul>
+              <span id="welcome-msg"></span>
+    		  <a id="logout-link" href="logout">Logout</a>
+    		  <i id="avatar" class="avatar fa fa-user fa-2x"></i>
             </div>
           </div>
           <!-- DEFAULT MENU *END -->
         </div>
       </div>
     </div>
-  </div>
-  <!-- HEADER *END -->
-  
-  <!-- SLIDESHOW *START -->
-  <div class="slideshow wrap">
-    <div class="inner">
-      <div class="slider clearfix">
-        <h2>FUNscover</h2>
-        <h1>FIND WHAT YOU LIKE</h1>
-        <h3>
-          <a href="#" id="nearby-btn">see all events</a>
-          <a href="#" id="recommend-btn">recommend to you</a>
-          <a href="#" id="fav-btn">favorites</a>
-        </h3>
-      </div>
-    </div>
-  </div>
-  <!-- SLIDESHOW *END --> 
- 
-  
-  <!-- FEATURES *START -->
-  <div class="freebies wrap2 clearfix">
-    <div class="inner clearfix">
-      <div class="maintitle">
-      </div>
-          <div class="item">
-            <div class="inside"> 
-              <ul id="item-list">
-                <img width="140" height="140" src="http://www.themeraid.com/wp-content/uploads/2019/02/Book-In-Hand-Mockups.jpg" class="attachment-freebies-small size-freebies-small wp-post-image" alt="Book-In-Hand-Mockup" /> 
+   </div>
+   
+    <!-- <section class="main-section"> -->
+      <div class="form">
+        <form id="login-form">
+          <input id="username" type="text" placeholder="username"/>
+          <input id="password" type="password" placeholder="password"/>
+          <button id="login-btn">login</button>
+          <p class="message">Not registered? <a href="#" id="register-form-btn">Create an account</a></p>
+          <p id="login-error"></p>
+        </form>
+        <form id="register-form">
+          <input id="register-username" type="text" placeholder="name"/>
+          <input id="register-password" type="password" placeholder="password"/>
+          <input id="register-first-name" type="text" placeholder="firstname"/>
+          <input id="register-last-name" type="text" placeholder="lastname"/>
+          <button id="register-btn">create</button>
+          <p class="message">Already registered? <a href="#" id="login-form-btn">Sign In</a></p>
+          <p id="register-result"></p>
+        </form>
+       </div>
+
+      <!-- <aside id="item-nav">
+        <div class="nav-icon">
+          <i class="fa fa-sitemap fa-2x"></i>
+        </div>
+        <nav class="main-nav">
+          <a href="#" id="nearby-btn" class="main-nav-btn active">
+            <i class="fa fa-map-marker"></i> Nearby
+          </a>
+          <a href="#" id="fav-btn" class="main-nav-btn">
+            <i class="fa fa-heart"></i> My Favorites
+          </a>
+          <a href="#" id="recommend-btn" class="main-nav-btn">
+            <i class="fa fa-thumbs-up"></i> Recommendation
+          </a>
+        </nav>
+      </aside> -->
+      
+      <!-- SLIDESHOW *START -->
+	  <div class="slideshow wrap" id="item-nav">
+	    <div class="inner">
+	      <div class="slider clearfix">
+	        <h2>FUNscover</h2>
+	        <h1>FIND WHAT YOU LIKE</h1>
+	        <h3>
+	          <a href="#" id="nearby-btn">see all events</a>
+	          <a href="#" id="recommend-btn">recommend to you</a>
+	          <a href="#" id="fav-btn">favorites</a>
+	        </h3>
+	      </div>
+	    </div>
+	  </div>
+	  <!-- SLIDESHOW *END --> 
+
+      <ul id="item-list">
+        <img width="140" height="140" src="http://www.themeraid.com/wp-content/uploads/2019/02/Book-In-Hand-Mockups.jpg" class="attachment-freebies-small size-freebies-small wp-post-image" alt="Book-In-Hand-Mockup" /> 
                
                 <img width="140" height="140" src="http://www.themeraid.com/wp-content/uploads/2017/05/140-2.jpg" class="attachment-freebies-small size-freebies-small wp-post-image" alt="" />  
                 
@@ -141,52 +149,45 @@
                 <img width="140" height="140" src="http://www.themeraid.com/wp-content/uploads/2016/01/xxx.jpg" class="attachment-freebies-small size-freebies-small wp-post-image" alt="Android App Device Mockup" />  
                 
                 <img width="140" height="140" src="http://www.themeraid.com/wp-content/uploads/2015/11/140.jpg" class="attachment-freebies-small size-freebies-small wp-post-image" alt="Company Proposal Template" /> 
-              </ul>          
-            </div>
-          </div>
-      </div>
-    
+      </ul>
+    </section>
   </div>
   
-  <!-- FEATURES *END --> 
-  
-  <!-- FOOTER *START -->
-  <div class="footer wrap2 clearfix">
-    <div class="inner clearfix">
-      <div class="maintitle">
-        <p></p>
-      </div>
+  <footer>
+    <!-- FOOTER *START -->
+  	<div class="footer wrap2 clearfix">
+    	<div class="inner clearfix">
+      	<div class="maintitle">
+        	<p></p>
+      	</div>
       
-      <div class="left"> 
-        <span class="subscribe-title">Subscribe to our newsletter</span> 
-        <span class="subscribe-desc">Subscribe to our newsletter to receive news, updates, free stuff and new releases by email. We don't do spam.</span>
+      	<div class="left"> 
+        	<span class="subscribe-title">Subscribe to our newsletter</span> 
+        	<span class="subscribe-desc">Subscribe to our newsletter to receive news, updates, free stuff and new releases by email. We don't do spam.</span>
         
-<form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=ThemeRaidFreebies', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input class="subscribe-form" type="text" name="email"/><input type="hidden" value="ThemeRaidFreebies" name="uri"/><input type="hidden" name="loc" value="en_US"/><input class="subscribe-button" type="submit" value="Subscribe." /></form>
+			<form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=ThemeRaidFreebies', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"><input class="subscribe-form" type="text" name="email"/><input type="hidden" value="ThemeRaidFreebies" name="uri"/><input type="hidden" name="loc" value="en_US"/><input class="subscribe-button" type="submit" value="Subscribe." /></form>
 
-        <div class="credits">© 2019 Designed by <a href="http://themeraid.com">Jiayue Bao</a></div>
-      </div>
-      <div class="right"> <span class="blog-title">Latest from the Blog</span>
-        <ul class="blog-results">
-                                    <li><a href="http://www.themeraid.com/funny-graphic-design-posters/">Funny Graphic Design Posters</a></li> 
-                              <li><a href="http://www.themeraid.com/how-to-fix-custom-post-type-404-error/">How to Fix Custom Post Type 404 Error</a></li> 
-                              <li><a href="http://www.themeraid.com/free-one-page-html-website-templates/">Free One Page Html Website Templates</a></li> 
-                              <li><a href="http://www.themeraid.com/best-html-admin-panel-templates/">Best Html Admin Panel Templates</a></li> 
-                              <li><a href="http://www.themeraid.com/in-place-editable-html-invoice/">In-place Editable Html Invoice</a></li> 
-                      
-        </ul>
-        <ul class="sitemap">
-          <li><a href="http://facebook.com/themeraid">Facebook</a></li>
-          <li><a href="http://twitter.com/themeraid">Twitter</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+        	<div class="credits">© 2019 Designed by <a href="http://themeraid.com">Jiayue Bao</a></div>
+      	</div>
+      	<div class="right"> <span class="blog-title">Latest from the Blog</span>
+        	<ul class="blog-results">
+	            <li><a href="http://www.themeraid.com/funny-graphic-design-posters/">Funny Graphic Design Posters</a></li> 
+	            <li><a href="http://www.themeraid.com/how-to-fix-custom-post-type-404-error/">How to Fix Custom Post Type 404 Error</a></li> 
+	            <li><a href="http://www.themeraid.com/free-one-page-html-website-templates/">Free One Page Html Website Templates</a></li> 
+	            <li><a href="http://www.themeraid.com/best-html-admin-panel-templates/">Best Html Admin Panel Templates</a></li> 
+	            <li><a href="http://www.themeraid.com/in-place-editable-html-invoice/">In-place Editable Html Invoice</a></li>                       
+        	</ul>
+        	<ul class="sitemap">
+          	<li><a href="http://facebook.com/themeraid">Facebook</a></li>
+          	<li><a href="http://twitter.com/themeraid">Twitter</a></li>
+        	</ul>
+      	</div>
+    	</div>
+  	</div>
   <!-- FOOTER *END --> 
-
-  <!-- JAVASCRIPT *START --> 
+  </footer>
+  
   <script src="https://rawgit.com/emn178/js-md5/master/build/md5.min.js"></script>
-  <!--  --><script src="js/mock.js"></script>
   <script src="js/main.js"></script>
-  <!-- JAVASCRIPT *END -->
 </body>
-</html>  
+</html>
