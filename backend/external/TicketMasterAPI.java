@@ -47,7 +47,7 @@ public class TicketMasterAPI {
 		
 		
 		try {
-			keyword = URLEncoder.encode(keyword, "UTF-8"); //"Rick Sun" => "Rick%20Sun"
+			keyword = URLEncoder.encode(keyword, "UTF-8"); //"Jiayue Bao" => "Jiayue%20Bao"
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
