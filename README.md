@@ -10,11 +10,11 @@ A Java web service which can search and recommend the nearby events for users.
   - servlet for recommend events(/recommendation)
   - servlet for browse nearby events(/search)
   - servlet for check favorites (/history)
-- Database: MySQL, JDBC
-  - events
-  - users
-  - history
-  - categories
+- Database: MySQL(JDBC)
+  - "events" table
+  - "users" table
+  - "history" table
+  - "categories" table
 ### Frontend
 - HTML
 - CSS
